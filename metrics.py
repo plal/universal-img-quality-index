@@ -15,6 +15,7 @@ def covariance(img1, img2):
 def loss_correl(img1, img2):
     cov = covariance(img1, img2)
     cov = cov/(covariance(img1,img1) * covariance(img2,img2))
+    return cov
 
 def lum_distortion(img1, img2):
     xmean = np.mean(img1)
@@ -35,7 +36,6 @@ def Q(img1, img2):
     lc = loss_correl(img1, img2)
     ld = lum_distortion(img1, img2)
     cd = contrast_distortion(img1, img2)
-    print(lc, ld, cd)
     return lc*ld*cd
 
 def mse(img1, img2):
@@ -49,4 +49,4 @@ def mse(img1, img2):
 
 img = cv2.imread('imgs/Image42.png', 0)
 blur = cv2.imread('imgs/blur.png', 0)
-print(Q(img, blur))
+print(Q(img, img))
