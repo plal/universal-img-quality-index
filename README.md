@@ -1,0 +1,1 @@
+# universal-img-quality-index
