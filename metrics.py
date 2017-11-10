@@ -12,7 +12,7 @@ def covariance(img1, img2):
 
     return sum_/((M*N) - 1)
 
-def loss_correl(img1, img2):
+'''def loss_correl(img1, img2):
     cov = covariance(img1, img2)
     a = cov/(covariance(img1,img1) * covariance(img2,img2))
     return a
@@ -36,12 +36,13 @@ def Q(img1, img2):
     lc = loss_correl(img1, img2)
     ld = lum_distortion(img1, img2)
     cd = contrast_distortion(img1, img2)
-    return lc*ld*cd
+    return lc*ld*cd'''
 
 def Q2(img1, img2):
     top = 4*covariance(img1,img2)*np.mean(img1)*np.mean(img2)
     bot = (covariance(img1, img1) + covariance(img2,img2)) * ((np.mean(img1)**2) + (np.mean(img2)**2))
     return top/bot
+
 def mse(img1, img2):
     M, N = img1.shape
     sum_ = 0
