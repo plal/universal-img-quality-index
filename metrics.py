@@ -29,14 +29,41 @@ def contrast_distortion(img1,img2):
     yvar = covariance(img2, img2)
     top = xvar * yvar * 2
     bot = (xvar**2) + (yvar**2)
-    return top/bot
+    return top/bot'''
 
 
 def Q(img1, img2):
-    lc = loss_correl(img1, img2)
-    ld = lum_distortion(img1, img2)
-    cd = contrast_distortion(img1, img2)
-    return lc*ld*cd'''
+    kernel = np.ones((8,8), np.float32)
+    N = 64
+
+    img1sq = np.multiply(img1, img1)
+    img2sq = np.multiply(img2, img2)
+    img12 = np.multiply(img1, img2)
+
+    img1sum   = cv2.filter2D(img1, -1, kernel);
+    img2sum   = cv2.filter2D(img2, -1, kernel);
+    img1sq_sum = cv2.filter2D(img1sq, -1, kernel);
+    img2sq_sum = cv2.filter2D(img2sq, -1, kernel);
+    img12_sum = cv2.filter2D(img12, -1, kernel);
+
+    img12_sm = np.multiply(img1sum, img2sum)
+    img12_sqsm = np.multiply(img1sum, img1sum)+np.multiply(img2sum,img2sum)
+    top = np.multiply(4*(N*img12_sum - img12_sm),img12_sm)
+    bot = np.multiply((N*(img1sq_sum+img2sq_sum) - img12_sqsm), img12_sqsm)
+
+    qmap = np.ones((len(bot), len(bot)), np.float32)
+    #i1 = np.where(bot == 0)
+    #i2 = np.where(img12_sqsm != 0)
+    #index = list(set(i1).intersection(i2))
+    #print(index)
+    for i in range(img12_sqsm.shape[0]):
+        for j in range(img12_sqsm.shape[1]):
+            if(bot[i][j] == 0 and img12_sqsm[i][j]):
+                qmap[i][j] = 2*img12_sm[i][j]/img12_sqsm[i][j]
+            elif(bot[i][j] != 0):
+                qmap[i][j] = top[i][j]/bot[i][j]
+
+    return np.mean(qmap)
 
 def Q2(img1, img2):
     top = 4*covariance(img1,img2)*np.mean(img1)*np.mean(img2)
@@ -52,6 +79,6 @@ def mse(img1, img2):
 
     return sum_/(M*N)
 
-img = cv2.imread('imgs/Image6.png', 0)
-blur = cv2.imread('imgs/cs2.png', 0)
-print(mse(img, blur))
+img = cv2.imread('imgs/Image36.png', 0)
+blur = cv2.imread('imgs/blur.png', 0)
+print(Q(img, img))
