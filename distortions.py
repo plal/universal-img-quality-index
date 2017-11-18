@@ -69,17 +69,17 @@ def contrast_stretching(image):
     return output
 
 
-img = cv2.imread('imgs/Image42.png',0)
+img = cv2.imread('imgs/Image6.png',0)
 #encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 95]
 #result, encimg = cv2.imencode('.jpg', img, encode_param)
 #cv2.imwrite('imgs/jpeg_comp.png',encimg)
 #gauss_img = gauss(img)
 #cv2.imwrite('imgs/gauss.png',gauss_img)
 cs_image = contrast_stretching(img)
-cv2.imwrite('imgs/cs.png',cs_image)
+cv2.imwrite('imgs/cs2.png',cs_image)
 #speckle_img = speckle(img)
 #cv2.imwrite('imgs/speckle.png',speckle_img)
 blur = cv2.blur(img,(5,5))
-cv2.imwrite('imgs/blur.png',blur)
+cv2.imwrite('imgs/blur2.png',blur)
 sp_img = sp_noise(img,0.004)
-cv2.imwrite('imgs/sp.png',sp_img)
+cv2.imwrite('imgs/sp2.png',sp_img)
