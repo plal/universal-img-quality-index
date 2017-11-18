@@ -58,7 +58,7 @@ def Q(img1, img2):
     #print(index)
     for i in range(img12_sqsm.shape[0]):
         for j in range(img12_sqsm.shape[1]):
-            if(bot[i][j] == 0 and img12_sqsm[i][j]):
+            if(bot[i][j] == 0 and img12_sqsm[i][j] != 0):
                 qmap[i][j] = 2*img12_sm[i][j]/img12_sqsm[i][j]
             elif(bot[i][j] != 0):
                 qmap[i][j] = top[i][j]/bot[i][j]
