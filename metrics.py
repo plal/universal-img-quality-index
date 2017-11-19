@@ -79,7 +79,7 @@ def Q2(img1, img2):
     bot = (covariance(img1, img1) + covariance(img2,img2)) * ((np.mean(img1)**2) + (np.mean(img2)**2))
     return top/bot
 
-'''
+
 def get_subimg_mean(i,j,img):
     sum_ = 0
     for x in range (i,i+8):
