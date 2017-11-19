@@ -38,13 +38,14 @@ def Q(img1, img2):
     ld = lum_distortion(img1, img2)
     cd = contrast_distortion(img1, img2)
     return lc*ld*cd
+'''
 
 def Q2(img1, img2):
     top = 4*covariance(img1,img2)*np.mean(img1)*np.mean(img2)
     bot = (covariance(img1, img1) + covariance(img2,img2)) * ((np.mean(img1)**2) + (np.mean(img2)**2))
     return top/bot
-'''
 
+'''
 def get_subimg_mean(i,j,img):
     sum_ = 0
     for x in range (i,i+8):
@@ -83,6 +84,7 @@ def get_img_q(img1,img2):
             Q += get_subimg_q(i,j,img1,img2)
     res = Q / ((h-8)*(w-8))
     return res
+'''
 
 def mse(img1, img2):
     M, N = img1.shape
