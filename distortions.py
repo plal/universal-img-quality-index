@@ -16,48 +16,26 @@ def sp_noise(image,prob):
                 output[i][j] = image[i][j]
     return output
 
-'''def gauss_noise(image):
+def gauss(image):
     row,col = image.shape
     mean = 0
-    gauss = np.random.normal(mean,1,(row,col))
-    gauss = gauss.reshape(row,col)
-    noisy = image + gauss
-    return noisy
-
-
-   def gauss_noise(image,prob):
-    img_ = image.copy()
-    noise = np.random.normal(0,1,[img_.shape[0],img_.shape[1]])
-    print(noise)
-    noisy_img = img_+noise
-    for i in range(img_.shape[0]):
-        for j in range(img_.shape[1]):
-            if noisy_img[i][j] > 1:
-                noisy_img[i][j] = 1
-            elif noisy_img[i][j] < 0:
-                noisy_img[i][j] = 0
-    for i in range(img_.shape[0]):
-        for j in range(img_.shape[1]):
-            noisy_img[i][j] = noisy_img[i][j]*3
-    return noisy_img
-
-
-   def gauss(image):
-    row,col = image.shape
-    mean = 1
-    gauss = np.random.normal(mean,1,(row,col))
+    var = 100
+    sigma = var**0.5
+    gauss = np.random.normal(mean,sigma,(row,col))
     gauss = gauss.reshape(row,col)
     noisy = image+gauss
     return noisy
 
 
-   def speckle(image):
+def speckle(image):
     row,col = image.shape
-    gauss = np.random.randn(row,col)
+    mean = 0
+    var = 0.04
+    sigma = var**0.5
+    gauss = np.random.normal(mean,sigma,(row,col))
     gauss = gauss.reshape(row,col)
     noisy = image + image*gauss
     return noisy
-'''
 
 def contrast_stretching(image):
     output = np.zeros(image.shape, np.uint8)
@@ -68,18 +46,71 @@ def contrast_stretching(image):
             output[i][j] = ((image[i][j]-min_int)/(max_int - min_int))*255
     return output
 
+'''Goldhill image and its distortions'''
+goldhill = cv2.imread('imgs/goldhill/goldhill.png',0)
+#jpg compression
+encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
+result, encimg = cv2.imencode('.jpg', goldhill, encode_param)
+goldhill_jpg = cv2.imdecode(encimg, 1)
+cv2.imwrite('imgs/goldhill/goldhill_jpg.png',goldhill_jpg)
+#gaussian noise
+goldhill_gaussian = gauss(goldhill)
+cv2.imwrite('imgs/goldhill/goldhill_gaussian.png',goldhill_gaussian)
+#contrast stretching
+goldhill_cs = contrast_stretching(goldhill)
+cv2.imwrite('imgs/goldhill/goldhill_cs.png',goldhill_cs)
+#multiplicative speckle
+goldhill_speckle = speckle(goldhill)
+cv2.imwrite('imgs/goldhill/goldhill_speckle.png',goldhill_speckle)
+#blur
+goldhill_blur = cv2.blur(goldhill,(5,5))
+cv2.imwrite('imgs/goldhill/goldhill_blur.png',goldhill_blur)
+#salt and pepper
+goldhill_sp = sp_noise(goldhill,0.004)
+cv2.imwrite('imgs/goldhill/goldhill_sp.png',goldhill_sp)
 
-img = cv2.imread('imgs/Image42.png',0)
-#encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 95]
-#result, encimg = cv2.imencode('.jpg', img, encode_param)
-#cv2.imwrite('imgs/jpeg_comp.png',encimg)
-#gauss_img = gauss(img)
-#cv2.imwrite('imgs/gauss.png',gauss_img)
-cs_image = contrast_stretching(img)
-cv2.imwrite('imgs/cs.png',cs_image)
-#speckle_img = speckle(img)
-#cv2.imwrite('imgs/speckle.png',speckle_img)
-blur = cv2.blur(img,(5,5))
-cv2.imwrite('imgs/blur.png',blur)
-sp_img = sp_noise(img,0.004)
-cv2.imwrite('imgs/sp.png',sp_img)
+'''Lena image and its distortions'''
+lena = cv2.imread('imgs/lena/lena.png',0)
+#jpg compression
+encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
+result, encimg = cv2.imencode('.jpg', lena, encode_param)
+lena_jpg = cv2.imdecode(encimg, 1)
+cv2.imwrite('imgs/lena/lena_jpg.png',lena_jpg)
+#gaussian noise
+lena_gaussian = gauss(lena)
+cv2.imwrite('imgs/lena/lena_gaussian.png',lena_gaussian)
+#contrast stretching
+lena_cs = contrast_stretching(lena)
+cv2.imwrite('imgs/lena/lena_cs.png',lena_cs)
+#multiplicative speckle
+lena_speckle = speckle(lena)
+cv2.imwrite('imgs/lena/lena_speckle.png',lena_speckle)
+#blur
+lena_blur = cv2.blur(lena,(5,5))
+cv2.imwrite('imgs/lena/lena_blur.png',lena_blur)
+#salt and pepper
+lena_sp = sp_noise(lena,0.004)
+cv2.imwrite('imgs/lena/lena_sp.png',lena_sp)
+
+'''Couple image and its distortions'''
+couple = cv2.imread('imgs/couple/couple.png',0)
+#jpg compression
+encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
+result, encimg = cv2.imencode('.jpg', couple, encode_param)
+couple_jpg = cv2.imdecode(encimg, 1)
+cv2.imwrite('imgs/couple/couple_jpg.png',couple_jpg)
+#gaussian noise
+couple_gaussian = gauss(couple)
+cv2.imwrite('imgs/couple/couple_gaussian.png',couple_gaussian)
+#contrast stretching
+couple_cs = contrast_stretching(couple)
+cv2.imwrite('imgs/couple/couple_cs.png',couple_cs)
+#multiplicative speckle
+couple_speckle = speckle(couple)
+cv2.imwrite('imgs/couple/couple_speckle.png',couple_speckle)
+#blur
+couple_blur = cv2.blur(couple,(5,5))
+cv2.imwrite('imgs/couple/couple_blur.png',couple_blur)
+#salt and pepper
+couple_sp = sp_noise(couple,0.004)
+cv2.imwrite('imgs/couple/couple_sp.png',couple_sp)
