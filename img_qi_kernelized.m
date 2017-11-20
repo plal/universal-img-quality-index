@@ -3,6 +3,9 @@ function quality = img_qi(img1, img2, kernelsize)
 N = kernelsize.^2;
 sum2_filter = ones(kernelsize);
 
+img1 = double(img1);
+img2 = double(img2);
+
 img1_sq = img1.*img1;
 img2_sq = img2.*img2;
 img12 = img1.*img2;
