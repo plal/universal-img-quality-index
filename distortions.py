@@ -47,11 +47,11 @@ def contrast_stretching(image):
     return output
 
 '''Goldhill image and its distortions'''
-goldhill = cv2.imread('imgs/goldhill/goldhill.png',0)
+goldhill = cv2.imread('imgs/goldhill/goldhill.png',-1)
 #jpg compression
 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
 result, encimg = cv2.imencode('.jpg', goldhill, encode_param)
-goldhill_jpg = cv2.imdecode(encimg, 1)
+goldhill_jpg = cv2.imdecode(encimg, 0)
 cv2.imwrite('imgs/goldhill/goldhill_jpg.png',goldhill_jpg)
 #gaussian noise
 goldhill_gaussian = gauss(goldhill)
@@ -74,7 +74,7 @@ lena = cv2.imread('imgs/lena/lena.png',0)
 #jpg compression
 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
 result, encimg = cv2.imencode('.jpg', lena, encode_param)
-lena_jpg = cv2.imdecode(encimg, 1)
+lena_jpg = cv2.imdecode(encimg, 0)
 cv2.imwrite('imgs/lena/lena_jpg.png',lena_jpg)
 #gaussian noise
 lena_gaussian = gauss(lena)
@@ -97,7 +97,7 @@ couple = cv2.imread('imgs/couple/couple.png',0)
 #jpg compression
 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
 result, encimg = cv2.imencode('.jpg', couple, encode_param)
-couple_jpg = cv2.imdecode(encimg, 1)
+couple_jpg = cv2.imdecode(encimg, 0)
 cv2.imwrite('imgs/couple/couple_jpg.png',couple_jpg)
 #gaussian noise
 couple_gaussian = gauss(couple)
